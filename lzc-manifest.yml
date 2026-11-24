@@ -1,0 +1,85 @@
+usage: |
+  首次打开后创建 2FAuth 管理员账号；
+  数据持久保存在 /lzcapp/var/data；
+  升级时必须保留安装参数中的 APP_KEY。
+application:
+  subdomain: 2fauth
+  background_task: false
+  public_path:
+    - /api
+  routes:
+    - /=http://2fauth:8000
+  injects:
+    - id: lazycat-file-bridge
+      on: request
+      when:
+        - /__lazycat_file_bridge/*
+      do:
+        - src: |
+            const bridgePrefix = "/__lazycat_file_bridge";
+            const requestHost = String(ctx.request.host || "")
+              .split(":")[0]
+              .toLowerCase();
+            const firstDot = requestHost.indexOf(".");
+            const method = String(ctx.request.method || "").toUpperCase();
+
+            if (
+              firstDot <= 0 ||
+              !requestHost.endsWith(".heiyu.space") ||
+              !["GET", "HEAD", "PUT"].includes(method)
+            ) {
+              ctx.response.send(
+                ["GET", "HEAD", "PUT"].includes(method) ? 400 : 405,
+                "Invalid LazyCat file bridge request",
+              );
+              return;
+            }
+
+            const boxDomain = requestHost.slice(firstDot + 1);
+            const fileOrigin = "https://file." + boxDomain;
+            const targetPath =
+              "/files/home" + ctx.request.path.slice(bridgePrefix.length);
+
+            ctx.headers.del("Origin");
+            ctx.headers.del("Referer");
+            ctx.proxy.to(fileOrigin, {
+              path: targetPath,
+              query: ctx.request.raw_query,
+              use_target_host: true,
+              timeout_ms: 120000,
+              on_fail: "error",
+            });
+    - id: open-save-chooser
+      on: browser
+      when:
+        - /*
+      do:
+        - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
+          params:
+            diskRoot: /_lzc/files/home
+            fileBridgeRoot: /__lazycat_file_bridge
+            fallbackMime: application/octet-stream
+            locale: auto
+            hooks:
+              fileSystemAccess: true
+              fileInput: true
+              downloadAnchor: true
+services:
+  2fauth:
+    image: docker.io/2fauth/2fauth:9.0.3
+    user: '1000'
+    environment:
+      - APP_NAME=2FAuth
+      - APP_ENV=local
+      - APP_URL=https://{{ .S.AppDomain }}
+      - APP_KEY={{ .U.app_key }}
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/2fauth/database.sqlite
+    binds:
+      - /lzcapp/var/data:/2fauth
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:8000]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 45s

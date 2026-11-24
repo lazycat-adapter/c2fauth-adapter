@@ -1,0 +1,17 @@
+params:
+  - id: app_key
+    type: string
+    name: APP_KEY
+    description: 2FAuth 的加密密钥，安装时自动生成。升级时请保留原值。
+    default_value: $random(len=32)
+    optional: false
+
+locales:
+  zh:
+    app_key:
+      name: 2FAuth 加密密钥
+      description: 用于数据库和会话加密，安装时自动生成，升级时保持不变。
+  en:
+    app_key:
+      name: 2FAuth encryption key
+      description: Generated during installation and kept unchanged across upgrades.

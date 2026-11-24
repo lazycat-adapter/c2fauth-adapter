@@ -1,0 +1,28 @@
+package: cloud.lazycat.app.c2fauth
+version: 9.0.3
+name: 2FAuth
+description: 2FAuth 是谷歌身份验证器等一次性密码生成器的自托管替代品。
+homepage: https://github.com/Bubka/2FAuth
+author: Bubka
+license: GPL-3.0
+min_os_version: 1.5.0
+locales:
+  zh-CN:
+    name: 2FAuth
+    description: 2FAuth 是谷歌身份验证器等一次性密码生成器的自托管替代品，支持移动端和桌面端。
+    usage: |
+      首次打开后创建 2FAuth 管理员账号；
+      应用数据、OTP 数据库和附件持久保存在 /lzcapp/var/data；
+      升级时请保留安装参数中的 APP_KEY，否则旧数据无法解密。
+  en-US:
+    name: 2FAuth
+    description: A self-hosted alternative to one-time password generators such as Google Authenticator.
+    usage: |
+      Create the 2FAuth administrator account on first launch;
+      Application data, OTP records and storage persist under /lzcapp/var/data;
+      Keep the APP_KEY installation parameter unchanged during upgrades.
+permissions:
+  required:
+    - net.internet
+  optional:
+    - net.lan
