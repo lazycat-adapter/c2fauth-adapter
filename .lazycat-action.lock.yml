@@ -6,7 +6,7 @@ source:
     revision: 6ff68daafb9f87a25aa60f433c61041d342a2c0b
     tag: v9.0.3
 fingerprint: sha256:7daa40626dd9def0e0ac754da3762f243dd2f0521a71a0f8e6632a94c8d3e236
-status: packaged
+status: submitted
 images:
     - id: 2fauth
       source_ref: docker.io/2fauth/2fauth:9.0.3@sha256:e1f42fa1a7641ae474c9a1fae03959d9ed25b726c5a7478ea2d043d27b928ef3
@@ -26,3 +26,18 @@ application:
         - Security advisory GHSA-835v-w4x6-rh9j : Shared 2FA accounts: a share recipient can pre-compute future OTP codes (moderate)
         - Security advisory GHSA-3c3f-fvc4-87rh : SSRF guard does not decode 6to4 (2002::/16) / Teredo (2001::/32) embedded IPv4 in otpauth image= fetch validator (low)
 packaged_at: 2026-11-26T02:06:29.02531712Z
+reviews:
+    - id: 23980
+      source:
+        kind: git
+        version: 9.0.3
+        ref: refs/tags/v9.0.3
+        revision: 6ff68daafb9f87a25aa60f433c61041d342a2c0b
+        tag: v9.0.3
+      fingerprint: sha256:7daa40626dd9def0e0ac754da3762f243dd2f0521a71a0f8e6632a94c8d3e236
+      application_version: 9.0.4
+      lpk_sha256: 4fcb4539d165c1865ca74c5b3763ff0d168c65a669bfd7f218ce734e6a7016ef
+      status: waiting
+      created_at: 2026-11-26T02:06:53.577Z
+      submitted_at: 2026-11-26T02:06:53.721039624Z
+      checked_at: 2026-11-26T02:06:53.721040272Z
