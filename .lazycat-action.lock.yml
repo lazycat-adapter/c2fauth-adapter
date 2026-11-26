@@ -1,0 +1,28 @@
+version: 2
+source:
+    kind: git
+    version: 9.0.3
+    ref: refs/tags/v9.0.3
+    revision: 6ff68daafb9f87a25aa60f433c61041d342a2c0b
+    tag: v9.0.3
+fingerprint: sha256:7daa40626dd9def0e0ac754da3762f243dd2f0521a71a0f8e6632a94c8d3e236
+status: packaged
+images:
+    - id: 2fauth
+      source_ref: docker.io/2fauth/2fauth:9.0.3@sha256:e1f42fa1a7641ae474c9a1fae03959d9ed25b726c5a7478ea2d043d27b928ef3
+      source_digest: sha256:e1f42fa1a7641ae474c9a1fae03959d9ed25b726c5a7478ea2d043d27b928ef3
+      runtime_ref: registry.lazycat.cloud/peter/2fauth/2fauth:d4165550eb234e6a
+application:
+    package: cloud.lazycat.app.c2fauth
+    version: 9.0.4
+    lpk_sha256: 4fcb4539d165c1865ca74c5b3763ff0d168c65a669bfd7f218ce734e6a7016ef
+    changelog: |-
+        Upstream 9.0.4
+        ⚠️ This is a security release
+
+        ### Fixed
+
+        - Security advisory GHSA-r66h-vhqv-h27f : SSO-only PAT lockout is bypassed by an authorization flaw at Passport's token-refresh route (high)
+        - Security advisory GHSA-835v-w4x6-rh9j : Shared 2FA accounts: a share recipient can pre-compute future OTP codes (moderate)
+        - Security advisory GHSA-3c3f-fvc4-87rh : SSRF guard does not decode 6to4 (2002::/16) / Teredo (2001::/32) embedded IPv4 in otpauth image= fetch validator (low)
+packaged_at: 2026-11-26T02:06:29.02531712Z

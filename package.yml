@@ -1,5 +1,5 @@
 package: cloud.lazycat.app.c2fauth
-version: 9.0.3
+version: 9.0.4
 name: 2FAuth
 description: 2FAuth 是谷歌身份验证器等一次性密码生成器的自托管替代品。
 homepage: https://github.com/Bubka/2FAuth
